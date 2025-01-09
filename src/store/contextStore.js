@@ -7,7 +7,7 @@ export const StoreProvider = ({ children }) => {
     const [scanResult, setScanResult] = useState(null);
 
     // const backendHostLink="http://localhost:8000/api/v1"
-    const backendHostLink="https://e-wallet-backend-lrj6ij5py-anjul-singhs-projects.vercel.app/api/v1"
+    const backendHostLink="https://e-wallet-backend-gold.vercel.app/api/v1"
 
     return (
         <StoreContext.Provider value={{
