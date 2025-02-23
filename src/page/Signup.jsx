@@ -48,8 +48,6 @@ const SignUp = () => {
         console.error("Unexpected Error:", errorData);
         toast.error("Something went wrong. Please try again.");
       }
-
-     
     } catch (error) {
       console.error("Network Error:", error);
       toast.error("Unable to connect to the server. Please try again later.");
@@ -57,15 +55,15 @@ const SignUp = () => {
   };
 
   useEffect(() => {
-    if(localStorage.getItem('userId')){
-        navigate('/')
+    if (localStorage.getItem("userId")) {
+      navigate("/");
     }
-  },[])
+  }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-white dark:bg-black relative">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-white dark:bg-black relative p-2">
       <div className="absolute top-5 right-5"></div>
-      <div className="w-full max-w-md p-8 space-y-6 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg">
+      <div className="w-full max-w-md p-8 space-y-6 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg ">
         <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">
           Sign Up
         </h2>

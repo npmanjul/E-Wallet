@@ -4,52 +4,76 @@ import { useNavigate } from "react-router-dom";
 import { useStore } from "../store/contextStore";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
+  const [input, setInput] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { backendHostLink } = useStore();
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^[0-9]{10}$/;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    if (name === "input") {
+      setInput(value);
+    } else if (name === "password") {
+      setPassword(value);
+    }
   };
 
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-        const response = await fetch(`${backendHostLink}/auth/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
-        const data = await response.json();
-        if(response.ok){
-            localStorage.setItem('token', data.token)
-            localStorage.setItem('name', data.name)
-            localStorage.setItem('userId', data.userId)
-            navigate('/')
-            toast.success('Login Successfully')
-        }else if(response.status===422){
-            toast.error('Invalid Credentials')
-        }
-     }catch(error){
-        console.log(error)
-     }
+
+    try {
+      const formData = {
+        password,
+      };
+
+      if (emailRegex.test(input)) {
+        formData.email = input;
+      } else if (phoneRegex.test(input)) {
+        formData.phone = input;
+      } else {
+        toast.error("Please enter a valid email or phone number");
+        return;
+      }
+
+      const response = await fetch(`${backendHostLink}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      console.log(formData);
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("name", data.name);
+        localStorage.setItem("userId", data.userId);
+        navigate("/");
+        toast.success("Login Successfully");
+      } else if (response.status === 422) {
+        toast.error("Invalid Credentials");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong! Please try again.");
+    }
   };
 
-   useEffect(() => {
-      if(localStorage.getItem('userId')){
-          navigate('/')
-      }
-    },[])
+  useEffect(() => {
+    if (localStorage.getItem("userId")) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white dark:bg-black">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white dark:bg-black p-2">
       <div className="w-full max-w-md p-8 space-y-6 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">
           Login
@@ -57,19 +81,19 @@ const Login = () => {
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label
-              htmlFor="email"
+              htmlFor="input"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Email
+              Email or Phone Number
             </label>
             <input
-              type="email"
-              name="email"
-              id="email"
-              value={formData.email}
+              type="text"
+              name="input"
+              id="input"
+              value={input}
               onChange={handleChange}
               className="w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-              placeholder="Enter your email"
+              placeholder="Enter your email or phone number"
               required
             />
           </div>
@@ -85,7 +109,7 @@ const Login = () => {
               type="password"
               name="password"
               id="password"
-              value={formData.password}
+              value={password}
               onChange={handleChange}
               className="w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               placeholder="Enter your password"
