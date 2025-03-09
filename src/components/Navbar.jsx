@@ -23,7 +23,7 @@ const Navbar = () => {
           <div className="font-bold text-xl sm:text-3xl text-gray-800 dark:text-white flex items-center justify-center gap-2 ">
             <span>
               <svg
-                class="w-10 h-10 text-gray-800 dark:text-white"
+                class="w-10 h-10 text-blue-600 dark:text-yellow-400"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="40"
@@ -43,7 +43,10 @@ const Navbar = () => {
                 />
               </svg>
             </span>
-            E-Wallet
+            <span>
+              Pay{" "}
+              <span className="dark:text-yellow-400 text-blue-700">Pro</span>
+            </span>
           </div>
         </Link>
 
@@ -87,7 +90,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      <div className="h-[80px] bg-white dark:bg-black"></div>
+      {/* <div className="h-[80px] bg-white dark:bg-black"></div> */}
     </>
   );
 };
