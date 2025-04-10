@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
+import { useStore } from "../store/contextStore";
+import UpdatePhoneNumberModal from "../components/UpdatePhoneNumberModal";
 
 const navigationCard = [
   {
@@ -127,6 +129,7 @@ const navigationCard = [
 ];
 
 const Home = () => {
+  const { checkPhoneNumber } = useStore();
   const navigate = useNavigate();
   const [loader, setLoader] = useState(true);
 
@@ -146,6 +149,7 @@ const Home = () => {
       }
       navigate("/login");
     }
+    checkPhoneNumber();
   }, []);
 
   return (
@@ -178,6 +182,7 @@ const Home = () => {
       ) : (
         <Loader />
       )}
+      <UpdatePhoneNumberModal />
     </div>
   );
 };

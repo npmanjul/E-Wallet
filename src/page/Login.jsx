@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../store/contextStore";
+import GoogleAuth from "../components/GoogleAuth";
 
 const Login = () => {
   const [input, setInput] = useState("");
@@ -48,8 +49,6 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
 
-      console.log(formData);
-
       const data = await response.json();
 
       if (response.ok) {
@@ -75,7 +74,7 @@ const Login = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white dark:bg-black p-2">
-      <div className="w-full max-w-md p-8 space-y-6 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg">
+      <div className="w-full max-w-md p-8 space-y-3 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">
           Login
         </h2>
@@ -125,6 +124,7 @@ const Login = () => {
             Login
           </button>
         </form>
+        <GoogleAuth />
         <p className="text-center text-sm text-gray-600 dark:text-gray-400">
           Don't have an account?{" "}
           <a

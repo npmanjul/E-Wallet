@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../store/contextStore";
+import GoogleAuth from "../components/GoogleAuth";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -61,9 +62,9 @@ const SignUp = () => {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-white dark:bg-black relative p-2">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-white dark:bg-black relative pt-12 px-2">
       <div className="absolute top-5 right-5"></div>
-      <div className="w-full max-w-md p-8 space-y-6 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg ">
+      <div className="w-full max-w-md p-8 space-y-3 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg ">
         <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">
           Sign Up
         </h2>
@@ -151,6 +152,7 @@ const SignUp = () => {
             Sign Up
           </button>
         </form>
+        <GoogleAuth />
         <p className="text-center text-sm text-gray-600 dark:text-gray-400">
           Already have an account?{" "}
           <a

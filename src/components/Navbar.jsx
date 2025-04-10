@@ -18,7 +18,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-full z-10 flex justify-between items-center py-4 px-6 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 ">
+      <div className="fixed top-0 left-0 w-full z-10 flex justify-between items-center py-4 px-6 rounded-md bg-clip-padding dark:bg-black  bg-white">
         <Link to="/">
           <div className="font-bold text-xl sm:text-3xl text-gray-800 dark:text-white flex items-center justify-center gap-2 ">
             <span>

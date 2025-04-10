@@ -23,7 +23,7 @@ const Balance = () => {
       );
 
       const data = await response.json();
-      if (data.balance) {
+      if (response.ok) {
         setBalance(data.balance);
         setTimeout(() => setLoader(false), 1000);
       } else {
