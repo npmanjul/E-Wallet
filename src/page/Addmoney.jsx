@@ -10,6 +10,7 @@ const Addmoney = () => {
   const { backendHostLink } = useStore();
 
   const navigate = useNavigate();
+  const [loader, setLoader] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -53,6 +54,7 @@ const Addmoney = () => {
   };
 
   const AddMoney = async () => {
+    setLoader(true);
     try {
       const response = await fetch(`${backendHostLink}/transaction/addAmount`, {
         method: "POST",
@@ -73,6 +75,8 @@ const Addmoney = () => {
       }
     } catch (error) {
       toast.error("Error Occured");
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -104,7 +108,12 @@ const Addmoney = () => {
             </div>
           </div>
         ) : (
-          <Loader />
+          <Loader
+            height={"h-8"}
+            width={"w-8"}
+            color={"text-white"}
+            bgColor={"fill-blue-500 dark:fill-yellow-500"}
+          />
         )}
 
         <div className="flex justify-center items-center gap-4 flex-col">
@@ -128,10 +137,20 @@ const Addmoney = () => {
               />
             </div>
             <button
-              className="bg-green-500 text-white rounded-lg py-3 px-6  sm:w-[500px] w-full"
+              className="bg-green-500 text-white rounded-lg py-3 px-6  sm:w-[500px] w-full disabled:bg-green-400 disabled:cursor-not-allowed"
               onClick={AddMoney}
+              disabled={loader}
             >
-              Add Money
+              {loader ? (
+                <Loader
+                  height={"h-6"}
+                  width={"w-6"}
+                  color={"text-white"}
+                  bgColor={"fill-green-500"}
+                />
+              ) : (
+                "Add Money"
+              )}
             </button>
           </div>
         </div>

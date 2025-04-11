@@ -59,7 +59,12 @@ const Profile = () => {
         <div className="dark:bg-slate-800 bg-slate-200 sm:p-9 p-4 flex justify-start items-start rounded-lg flex-col gap-4 sm:w-[500px] w-auto m-2">
           {loader ? (
             <div className="flex justify-center items-center w-full min-h-[200px]">
-              <Loader />
+              <Loader
+                height={"h-8"}
+                width={"w-8"}
+                color={"text-white"}
+                bgColor={"fill-blue-500 dark:fill-yellow-500"}
+              />
             </div>
           ) : (
             <>

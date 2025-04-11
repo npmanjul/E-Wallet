@@ -3,6 +3,7 @@ import { useStore } from "../store/contextStore";
 import toast from "react-hot-toast";
 import PinVerificationModal from "../components/PinVerification";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 const Transfermoney = () => {
   const [accountId_QR, setAccountId_QR] = useState("");
@@ -12,6 +13,7 @@ const Transfermoney = () => {
   const { scanResult } = useStore();
   const { backendHostLink } = useStore();
   const navigate = useNavigate();
+  const [loader, setLoader] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -42,6 +44,7 @@ const Transfermoney = () => {
   }
 
   const getAccountDetails = async () => {
+    setLoader(true);
     try {
       const response = await fetch(
         `${backendHostLink}/transaction/accountdetail`,
@@ -66,6 +69,8 @@ const Transfermoney = () => {
       }
     } catch (error) {
       toast.error("Error Occured");
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -88,9 +93,7 @@ const Transfermoney = () => {
       );
 
       const data = await response.json();
-      // console.log(response)
       if (response.ok) {
-        // window.location.reload();
         toast.success("Money Transfered Successfully");
         navigate("/history");
         setAccountId_QR("");
@@ -134,8 +137,34 @@ const Transfermoney = () => {
               <button
                 className="bg-blue-500 dark:bg-yellow-500 text-white rounded-lg py-3 px-6 sm:w-auto w-full"
                 onClick={getAccountDetails}
+                disabled={loader}
               >
-                Search
+                {loader ? (
+                  <div className="flex justify-center items-center gap-2">
+                    <Loader
+                      height={"h-5"}
+                      width={"w-5"}
+                      color={"text-white"}
+                      bgColor={"fill-blue-700 dark:fill-yellow-700"}
+                    />
+                    <span className="text-white font-semibold">
+                      Searching...
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-center gap-1">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="24px"
+                      viewBox="0 -960 960 960"
+                      width="24px"
+                      fill="#FFFFFF"
+                    >
+                      <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+                    </svg>
+                    <span className="text-white font-semibold">Search</span>
+                  </div>
+                )}
               </button>
             </div>
           ) : (

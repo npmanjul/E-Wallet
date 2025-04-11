@@ -54,7 +54,12 @@ const Balance = () => {
           Wallet Balance 🤑
         </h1>
         {loader ? (
-          <Loader />
+          <Loader
+            height={"h-8"}
+            width={"w-8"}
+            color={"text-white"}
+            bgColor={"fill-blue-500 dark:fill-yellow-500"}
+          />
         ) : (
           <>
             <div className="dark:bg-slate-600 bg-slate-200 p-9 flex justify-center items-center rounded-lg flex-col gap-4">

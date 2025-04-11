@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../store/contextStore";
 import GoogleAuth from "../components/GoogleAuth";
+import Loader from "../components/Loader";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const SignUp = () => {
 
   const navigate = useNavigate();
   const { backendHostLink } = useStore();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,6 +24,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await fetch(`${backendHostLink}/auth/signup`, {
         method: "POST",
@@ -52,6 +55,8 @@ const SignUp = () => {
     } catch (error) {
       console.error("Network Error:", error);
       toast.error("Unable to connect to the server. Please try again later.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -147,9 +152,19 @@ const SignUp = () => {
 
           <button
             type="submit"
-            className="w-full py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:ring focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600"
+            disabled={isLoading}
+            className="w-full py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:ring focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
-            Sign Up
+            {isLoading ? (
+              <Loader
+                height={"h-6"}
+                width={"w-6"}
+                color={"text-white"}
+                bgColor={"fill-blue-600"}
+              />
+            ) : (
+              "Sign Up"
+            )}
           </button>
         </form>
         <GoogleAuth />

@@ -180,7 +180,12 @@ const Home = () => {
           </div>
         </>
       ) : (
-        <Loader />
+        <Loader
+          height={"h-8"}
+          width={"w-8"}
+          color={"text-white"}
+          bgColor={"fill-blue-500 dark:fill-yellow-500"}
+        />
       )}
       <UpdatePhoneNumberModal />
     </div>

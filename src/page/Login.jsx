@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../store/contextStore";
 import GoogleAuth from "../components/GoogleAuth";
+import Loader from "../components/Loader";
 
 const Login = () => {
   const [input, setInput] = useState("");
@@ -26,6 +27,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const formData = {
@@ -63,6 +65,8 @@ const Login = () => {
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong! Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -119,9 +123,19 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:ring focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600"
+            disabled={isLoading}
+            className="w-full py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:ring focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
-            Login
+            {isLoading ? (
+              <Loader
+                height={"h-6"}
+                width={"w-6"}
+                color={"text-white"}
+                bgColor={"fill-blue-600"}
+              />
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
         <GoogleAuth />

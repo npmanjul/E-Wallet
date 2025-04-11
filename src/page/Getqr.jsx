@@ -71,7 +71,12 @@ const Getqr = () => {
                 className="w-full h-full p-3 pointer-events-none"
               />
             ) : (
-              <Loader />
+              <Loader
+                height={"h-8"}
+                width={"w-8"}
+                color={"text-white"}
+                bgColor={"fill-blue-500 dark:fill-yellow-500"}
+              />
             )}
           </div>
 
